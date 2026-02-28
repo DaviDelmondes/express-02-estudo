@@ -11,6 +11,10 @@ const app = express()
 const porta = 8080
 
 //app.use(rotasBasicos)
+
+// middleeware para leituras do body da requisição
+app.use(express.urlencoded({extended:true}))
+
 app.use(rotasBasicos)
 app.use(diferenteRetorno)
 app.use("/produtos", rotasAninhadas)

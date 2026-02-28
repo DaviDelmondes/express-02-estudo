@@ -11,6 +11,12 @@ router.get("/",(req,res)=>{
     res.status(200).send(pessoas)
 })
 
+router.post("/", (req, res)=>{
+    const novaPessoa = {nome:req.body.nome, idade:+req.body.idade}
+    pessoas.push(novaPessoa)
+    res.status(201).send(pessoas)
+})
+
 router.get("/:id",(req,res)=>{
     const indice = +req.params.id
     if (indice >= 0 && indice < pessoas.length){
@@ -19,4 +25,5 @@ router.get("/:id",(req,res)=>{
         res.status(204).send(pessoas)
     }
 })
+
 export default router
