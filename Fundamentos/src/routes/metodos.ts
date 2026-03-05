@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router()
 
-const pessoas =[
+let pessoas =[
     {nome:"Catia", idade:34},
     {nome:"Mauro", idade:45},
     {nome:"Otavio", idade:14}
@@ -25,5 +25,34 @@ router.get("/:id",(req,res)=>{
         res.status(204).send(pessoas)
     }
 })
+
+router.delete("/:id", (req,res)=>{
+    const indice = +req.params.id
+    const dadoAtualizados = pessoas.filter((pessoa, i)=> i  !== indice)
+    if(dadoAtualizados.length === pessoas.length){
+        res.status(406).send(pessoas)
+    }else{
+        pessoas = [...dadoAtualizados]
+        res.status(200).send(pessoas)
+    }
+})
+
+router.put("/:id", (req,res)=>{
+    const indice = +req.params.id
+    const dadoAtualizados = req.body
+    if(indice >=0 && indice < pessoas.length){
+        if(dadoAtualizados.nome){
+            pessoas[indice].nome = dadoAtualizados.nome
+        }
+
+        if(dadoAtualizados.idade){
+            pessoas[indice].idade = dadoAtualizados.idade
+        }
+        res.status(200).send(pessoas)
+    }else {
+        res.status(406).send(pessoas)
+    }
+})
+
 
 export default router
